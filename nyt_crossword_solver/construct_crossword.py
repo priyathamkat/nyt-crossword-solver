@@ -1,7 +1,6 @@
 import argparse
 import asyncio
 import json
-import os
 from pathlib import Path
 
 from autogen_agentchat.agents import AssistantAgent
