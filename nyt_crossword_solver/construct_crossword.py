@@ -5,15 +5,14 @@ from pathlib import Path
 
 from autogen_agentchat.agents import AssistantAgent
 from autogen_agentchat.messages import MultiModalMessage
-from autogen_core import CancellationToken
-from autogen_core import Image as AGImage
+from autogen_core import CancellationToken, Image
 from autogen_ext.models.openai import OpenAIChatCompletionClient
-from PIL import Image
+from PIL import Image as PILImage
 
 from nyt_crossword_solver.crossword import MiniCrossword
 
 
-async def construct_from_image(image: Image) -> MiniCrossword:
+async def construct_from_image(image: PILImage) -> MiniCrossword:
     """Construct a crossword puzzle from an image.
 
     Args:
@@ -23,7 +22,7 @@ async def construct_from_image(image: Image) -> MiniCrossword:
         MiniCrossword: The constructed crossword puzzle.
     """
 
-    image = AGImage(image)
+    image = Image(image)
     model_client = OpenAIChatCompletionClient(
         model="gpt-4o",
         response_format=MiniCrossword,
@@ -54,7 +53,7 @@ if __name__ == "__main__":
     output_path = Path(args.output_path)
     output_path = output_path / f"{image_path.stem}.json"
 
-    image = Image.open(str(image_path))
+    image = PILImage.open(str(image_path))
     crossword = asyncio.run(construct_from_image(image))
     crossword = json.loads(crossword)
     if MiniCrossword.model_validate(crossword):
