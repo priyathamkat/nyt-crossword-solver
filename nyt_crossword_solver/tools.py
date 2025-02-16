@@ -22,16 +22,16 @@ def nyt_crossword_tool(fn: callable):
 
 
 @nyt_crossword_tool
-async def word_len(word: str) -> str:
-    """Return the length of a word.
+async def answer_len(answer: str) -> int:
+    """Return the length of answer to a clue. Does not count special characters including spaces.
 
     Args:
-        word (str): The word to return the length of.
+        answer (str): The answer to a clue.
 
     Returns:
-        str: The length of the word as a string.
+        int: The length of the answer.
     """
-    return str(len(word))
+    return len([char for char in answer if char.isalpha()])
 
 
 @nyt_crossword_tool
