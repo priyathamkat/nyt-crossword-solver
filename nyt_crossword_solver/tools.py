@@ -35,11 +35,11 @@ async def word_len(word: str) -> str:
 
 
 @nyt_crossword_tool
-async def search_web(query: str) -> str:
-    """Use a search engine to find accurate answers to a query.
+async def ask_oracle(query: str) -> str:
+    """Find accurate answers to a query.
 
     Args:
-        query (str): The query to search the web for.
+        query (str): The query to search the for.
 
     Returns:
         str: The answer to the query.
