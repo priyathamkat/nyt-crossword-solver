@@ -21,6 +21,18 @@ def nyt_crossword_tool(fn: callable):
     return FunctionTool(wrapper, description=description, strict=True)
 
 
+def filter_invalid_characters(answer: str) -> str:
+    """Filter out invalid characters from a candidate answer.
+
+    Args:
+        answer (str): The candidate answer.
+
+    Returns:
+        str: The filtered candidate answer.
+    """
+    return "".join(char.upper() for char in answer if char.isalpha())
+
+
 @nyt_crossword_tool
 async def answer_len(answer: str) -> int:
     """Return the length of answer to a clue. Does not count special characters including spaces.
@@ -31,7 +43,21 @@ async def answer_len(answer: str) -> int:
     Returns:
         int: The length of the answer.
     """
-    return len([char for char in answer if char.isalpha()])
+    return len(filter_invalid_characters(answer))
+
+
+@nyt_crossword_tool
+async def get_nth_character(answer: str, n: int) -> str:
+    """Return the nth character of the answer to a clue.
+
+    Args:
+        answer (str): The answer to a clue.
+        n (int): The index of the character to return.
+
+    Returns:
+        str: The nth character of the answer.
+    """
+    return filter_invalid_characters(answer)[n]
 
 
 @nyt_crossword_tool
