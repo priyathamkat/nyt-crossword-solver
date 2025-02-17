@@ -24,3 +24,15 @@ uv run nyt_crossword_solver/solve.py <puzzle_json> <max_improvement_steps>
 # Credits
 All the screenshots of puzzles included in this repo are from [NY Times](https://www.nytimes.com/crosswords/game/mini).
 # License
+All the code in this repo is available under a permissive MIT License. Please use the following BibTex entry if you wish to cite this repo:
+```
+@misc{priyathamkat/nyt_crossword_solver,
+  author       = {Priyatham Kattakinda},
+  title        = {NYT Crossword Solver},
+  year         = {2025},
+  publisher    = {GitHub},
+  journal      = {GitHub repository},
+  howpublished = {\url{https://github.com/priyathamkat/nyt-crossword-solver}},
+  note         = {Accessed: 2025-02-17}
+}
+```
