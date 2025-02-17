@@ -26,10 +26,14 @@ candidates_generator_system_prompt = (
     """Use this tool when you need accurate and up-to-date information.\n"""
     """`get_nth_character`: Get the nth character of a candidate answer.\n"""
 )
-candidates_generator = AssistantAgent(
-    name="candidates_generator",
-    model_client=candidates_generator_model_client,
-    tools=[answer_len, ask_oracle, get_nth_character],
-    system_message=candidates_generator_system_prompt,
-    reflect_on_tool_use=True,
-)
+
+
+def candidates_generator_factory():
+    """Create a candidates generator agent."""
+    return AssistantAgent(
+        name="candidates_generator",
+        model_client=candidates_generator_model_client,
+        tools=[answer_len, ask_oracle, get_nth_character],
+        system_message=candidates_generator_system_prompt,
+        reflect_on_tool_use=True,
+    )
