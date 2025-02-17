@@ -1,88 +1,155 @@
 {
-    "clues": [
+    "grid": [
+        "###____",
+        "##_____",
+        "_______",
+        "_______",
+        "_______",
+        "_____##",
+        "____###"
+    ],
+    "across": [
         {
-            "orientation": "across",
-            "position": 1,
+            "position": [
+                0,
+                3
+            ],
             "clue": "Beer foam",
-            "length": 4
+            "length": 4,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "across",
-            "position": 5,
+            "position": [
+                1,
+                2
+            ],
             "clue": "Dance that it takes \"two\" to do",
-            "length": 5
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "across",
-            "position": 6,
+            "position": [
+                2,
+                0
+            ],
             "clue": "Annoying thing to forget on a trip",
-            "length": 7
+            "length": 7,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "across",
-            "position": 8,
+            "position": [
+                3,
+                0
+            ],
             "clue": "Color associated with Barbie",
-            "length": 7
+            "length": 7,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "across",
-            "position": 9,
+            "position": [
+                4,
+                0
+            ],
             "clue": "\"For all ___ and purposes ...\"",
-            "length": 7
+            "length": 7,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "across",
-            "position": 10,
+            "position": [
+                5,
+                0
+            ],
             "clue": "Maryland governor Wes",
-            "length": 5
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "across",
-            "position": 11,
+            "position": [
+                6,
+                0
+            ],
             "clue": "Cons' counterparts",
-            "length": 4
-        },
+            "length": 4,
+            "answer": null,
+            "consistency_score": null
+        }
+    ],
+    "down": [
         {
-            "orientation": "down",
-            "position": 1,
+            "position": [
+                0,
+                3
+            ],
             "clue": "Oldest monthly magazine in the U.S., launched in 1850",
-            "length": 7
+            "length": 7,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "down",
-            "position": 2,
+            "position": [
+                0,
+                4
+            ],
             "clue": "Front car of a train",
-            "length": 6
+            "length": 6,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "down",
-            "position": 3,
+            "position": [
+                0,
+                5
+            ],
             "clue": "Athlete's representative",
-            "length": 5
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "down",
-            "position": 4,
+            "position": [
+                0,
+                6
+            ],
             "clue": "Nerds",
-            "length": 5
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "down",
-            "position": 5,
+            "position": [
+                1,
+                2
+            ],
             "clue": "Body image?",
-            "length": 6
+            "length": 6,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "down",
-            "position": 6,
+            "position": [
+                2,
+                0
+            ],
             "clue": "Bonobo relative",
-            "length": 5
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
         },
         {
-            "orientation": "down",
-            "position": 7,
+            "position": [
+                2,
+                1
+            ],
             "clue": "Pay tribute to",
-            "length": 5
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
         }
     ]
 }
