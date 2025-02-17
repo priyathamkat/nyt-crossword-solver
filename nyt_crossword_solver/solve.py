@@ -7,8 +7,9 @@ from pathlib import Path
 
 from autogen_agentchat.agents import UserProxyAgent
 from autogen_agentchat.teams import RoundRobinGroupChat
+from tqdm import trange
 
-from nyt_crossword_solver.agents import candidates_generator
+from nyt_crossword_solver.agents import candidates_generator_factory
 from nyt_crossword_solver.crossword import MiniCrossword, consistency_score, get_intersecting_clues
 from nyt_crossword_solver.tools import filter_invalid_characters
 
@@ -38,6 +39,7 @@ async def generate_candidates(
         name="instruction_agent",
         input_func=lambda _: instruction,
     )
+    candidates_generator = candidates_generator_factory()
     team = RoundRobinGroupChat([instruction_agent, candidates_generator], max_turns=2)
     result = await team.run()
     return json.loads(result.messages[-1].content)["candidates"]
@@ -92,16 +94,14 @@ async def main():
         puzzle = json.load(f)
     crossword = MiniCrossword(**puzzle)
 
-    across_candidates = []
-    down_candidates = []
-    for clue in crossword.across:
-        candidates = await generate_candidates(clue.clue, clue.length)
-        across_candidates.append(candidates)
-    for clue in crossword.down:
-        candidates = await generate_candidates(clue.clue, clue.length)
-        down_candidates.append(candidates)
+    print("Generating candidate answers for the crossword clues...", end="", flush=True)
+    across_tasks = [generate_candidates(clue.clue, clue.length) for clue in crossword.across]
+    across_candidates = await asyncio.gather(*across_tasks)
+    down_tasks = [generate_candidates(clue.clue, clue.length) for clue in crossword.down]
+    down_candidates = await asyncio.gather(*down_tasks)
+    print(" Done.")
 
-    for i in range(args.max_improvements):
+    for i in trange(args.max_improvements, desc="Improving solution"):
         best_crossword = best_solution(crossword, across_candidates, down_candidates)
 
         worst_score = 1
