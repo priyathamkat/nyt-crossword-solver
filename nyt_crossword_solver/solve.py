@@ -6,10 +6,12 @@ from itertools import product
 from pathlib import Path
 
 from autogen_agentchat.agents import UserProxyAgent
+from autogen_agentchat.messages import TextMessage
 from autogen_agentchat.teams import RoundRobinGroupChat
+from autogen_core import CancellationToken
 from tqdm import trange
 
-from nyt_crossword_solver.agents import candidates_generator_factory
+from nyt_crossword_solver.agents import candidates_generator_factory, context_agent_factory, correctness_agent_factory
 from nyt_crossword_solver.crossword import MiniCrossword, consistency_score, get_intersecting_clues
 from nyt_crossword_solver.tools import filter_invalid_characters
 
@@ -39,10 +41,12 @@ async def generate_candidates(
         name="instruction_agent",
         input_func=lambda _: instruction,
     )
+    context_agent = context_agent_factory()
     candidates_generator = candidates_generator_factory()
-    team = RoundRobinGroupChat([instruction_agent, candidates_generator], max_turns=2)
+    team = RoundRobinGroupChat([instruction_agent, context_agent, candidates_generator], max_turns=3)
     result = await team.run()
-    return json.loads(result.messages[-1].content)["candidates"]
+    candidates = json.loads(result.messages[-1].content)["candidates"]
+    return [filter_invalid_characters(candidate) for candidate in candidates]
 
 
 def best_solution(
@@ -122,15 +126,36 @@ async def main():
         if worst_score == 1:
             break
         else:
+            intersections = get_intersecting_clues(best_crossword, worst_clue_orientation, worst_clue_idx)
+            intersections_to_consider = []
+            for intersection in intersections:
+                if intersection[2].consistency_score > 0.5:
+                    try:
+                        intersections_to_consider.append((intersection[0], intersection[2].answer[intersection[1]]))
+                    except IndexError:  # Other answer is too short
+                        pass
+            if len(intersections_to_consider) == len(intersections):
+                # All intersections are consistent, so it is likely that we can construct a correct answer
+                # for this clue using the intersections
+                new_candidate = "".join(intersection[1] for intersection in intersections_to_consider)
+                correctness_agent = correctness_agent_factory()
+                is_correct = await correctness_agent.on_messages(
+                    [
+                        TextMessage(
+                            content=f"Clue: {best_crossword.across[worst_clue_idx].clue} Candidate: {new_candidate}",
+                            source="User",
+                        )
+                    ],
+                    cancellation_token=CancellationToken(),
+                )
+                is_correct = json.loads(is_correct.chat_message.content)["is_correct"]
+                if is_correct:
+                    if worst_clue_orientation == "across":
+                        across_candidates[worst_clue_idx].append(new_candidate)
+                    else:
+                        down_candidates[worst_clue_idx].append(new_candidate)
+                    continue
             if worst_clue_orientation == "across":
-                intersections = get_intersecting_clues(best_crossword, "across", worst_clue_idx)
-                intersections_to_consider = []
-                for intersection in intersections:
-                    if intersection[2].consistency_score > 0.5:
-                        try:
-                            intersections_to_consider.append((intersection[0], intersection[2].answer[intersection[1]]))
-                        except IndexError:  # Other answer is too short
-                            pass
                 candidates = await generate_candidates(
                     best_crossword.across[worst_clue_idx].clue,
                     best_crossword.across[worst_clue_idx].length,
@@ -139,14 +164,6 @@ async def main():
                 )
                 across_candidates[worst_clue_idx].extend(candidates)
             else:
-                intersections = get_intersecting_clues(best_crossword, "across", worst_clue_idx)
-                intersections_to_consider = []
-                for intersection in intersections:
-                    if intersection[2].consistency_score > 0.5:
-                        try:
-                            intersections_to_consider.append((intersection[0], intersection[2].answer[intersection[1]]))
-                        except IndexError:  # Other answer is too short
-                            pass
                 candidates = await generate_candidates(
                     best_crossword.down[worst_clue_idx].clue,
                     best_crossword.down[worst_clue_idx].length,
