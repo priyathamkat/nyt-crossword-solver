@@ -2,7 +2,7 @@ from autogen_agentchat.agents import AssistantAgent
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 from pydantic import BaseModel
 
-from nyt_crossword_solver.tools import answer_len, ask_oracle
+from nyt_crossword_solver.tools import answer_len, ask_oracle, get_nth_character
 
 
 class CandidatesGeneratorFormat(BaseModel):
@@ -24,11 +24,12 @@ candidates_generator_system_prompt = (
     """incorrect length.\n"""
     """`ask_oracle`: Get accurate answers to well-formed, grammatically correct questions. """
     """Use this tool when you need accurate and up-to-date information.\n"""
+    """`get_nth_character`: Get the nth character of a candidate answer.\n"""
 )
 candidates_generator = AssistantAgent(
     name="candidates_generator",
     model_client=candidates_generator_model_client,
-    tools=[answer_len, ask_oracle],
+    tools=[answer_len, ask_oracle, get_nth_character],
     system_message=candidates_generator_system_prompt,
     reflect_on_tool_use=True,
 )
