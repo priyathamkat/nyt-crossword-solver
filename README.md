@@ -1,5 +1,5 @@
 # Solver for NY Times Crossword
-An LLM agents based solver for NY Times mini crossword.
+An LLM-agent-based solver for the NY Times mini crossword. Note that the algorithm in this solver is likely not very optimal, but it is by no means slow. I wrote this purely as an exercise in using LLM agents.
 # Usage
 ## Setup
 - Install `uv` package manager: [https://github.com/astral-sh/uv](https://github.com/astral-sh/uv)
