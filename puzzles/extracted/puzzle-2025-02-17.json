@@ -1,0 +1,113 @@
+{
+    "grid": [
+        "_____",
+        "_____",
+        "_____",
+        "_____",
+        "#___#"
+    ],
+    "across": [
+        {
+            "position": [
+                0,
+                0
+            ],
+            "clue": "Scooter seen in \"Roman Holiday\"",
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
+        },
+        {
+            "position": [
+                1,
+                0
+            ],
+            "clue": "No, in pig Latin",
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
+        },
+        {
+            "position": [
+                2,
+                0
+            ],
+            "clue": "\"The First ___\" (phrase on Delaware license plates)",
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
+        },
+        {
+            "position": [
+                3,
+                0
+            ],
+            "clue": "Zodiac ram",
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
+        },
+        {
+            "position": [
+                4,
+                1
+            ],
+            "clue": "Each and every one",
+            "length": 3,
+            "answer": null,
+            "consistency_score": null
+        }
+    ],
+    "down": [
+        {
+            "position": [
+                0,
+                0
+            ],
+            "clue": "Big name in cards",
+            "length": 4,
+            "answer": null,
+            "consistency_score": null
+        },
+        {
+            "position": [
+                0,
+                1
+            ],
+            "clue": "When repeated, newsie's cry",
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
+        },
+        {
+            "position": [
+                0,
+                2
+            ],
+            "clue": "It moves slow as shell",
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
+        },
+        {
+            "position": [
+                0,
+                3
+            ],
+            "clue": "Dev of 2024's \"Monkey Man\"",
+            "length": 5,
+            "answer": null,
+            "consistency_score": null
+        },
+        {
+            "position": [
+                0,
+                4
+            ],
+            "clue": "Affirmative votes",
+            "length": 4,
+            "answer": null,
+            "consistency_score": null
+        }
+    ]
+}
