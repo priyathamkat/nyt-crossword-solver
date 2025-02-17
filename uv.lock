@@ -396,6 +396,7 @@ dependencies = [
     { name = "autogen-ext", extra = ["openai"] },
     { name = "google-genai" },
     { name = "pydantic" },
+    { name = "tqdm" },
 ]
 
 [package.metadata]
@@ -406,6 +407,7 @@ requires-dist = [
     { name = "autogen-ext", extras = ["openai"], specifier = ">=0.4.7" },
     { name = "google-genai", specifier = ">=1.2.0" },
     { name = "pydantic", specifier = ">=2.10.6" },
+    { name = "tqdm", specifier = ">=4.67.1" },
 ]
 
 [[package]]
