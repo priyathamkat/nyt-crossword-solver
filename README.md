@@ -12,7 +12,7 @@ An LLM-agent-based solver for the NY Times mini crossword. Note that the algorit
 ## Extracting a puzzle
 You can prepare a puzzle for solving by running the following command:
 ```bash
-uv run <puzzle_screenshot> <puzzle_grid> <output_folder>
+uv run nyt_crossword_solver/construct_crossword.py <puzzle_screenshot> <puzzle_grid> <output_folder>
 ```
 See the [puzzles/images](puzzles/images/) folder for some example screenshots. Grid structure is a string denoting the shape of the grid. Starting from the top and going from left to right, indicate a black square with `#` and an empty square with `_`. For example, for the puzzle in [puzzles/images/puzzle-2025-02-17.png](puzzles/images/puzzle-2025-02-17.png), the grid structure is: `____________________#___#`. You can set output folder to [puzzles/extracted](puzzles/extracted/) if you desire.
 ## Solving a puzzle
